@@ -66,6 +66,8 @@
                 }
 
                 let previousInputs = getPreviousInputs();
+                previousInputs = previousInputs.replace(/x/g, '*');
+                
                 try {
                     let result = eval(previousInputs);
                     document.getElementsByClassName('output')[0].innerHTML = result;
