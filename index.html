@@ -105,7 +105,7 @@
 
                 try {
                     let result = eval(previousInputs);
-                    document.getElementsByClassName('output')[0].innerHTML = '<span class="output_number">'+result+'</span>';
+                    document.getElementsByClassName('output_items')[0].innerHTML = '<span class="output_number">'+result+'</span>';
                 } catch (error) {
                     let errorMsg = 'Wrong expressin : '+error;
                     console.log(errorMsg);
