@@ -11,26 +11,70 @@
                 <div class="calc_text"><span>calc</span></div>
                 <div class="output"></div>
                 <div class="input">
-                    <div class="white_button input_digit"><span>7</span></div>
-                    <div class="white_button input_digit"><span>8</span></div>
-                    <div class="white_button input_digit"><span>9</span></div>
-                    <div class="del_button"><span>DEL</span></div>
-                    <div class="white_button input_digit"><span>4</span></div>
-                    <div class="white_button input_digit"><span>5</span></div>
-                    <div class="white_button input_digit"><span>6</span></div>
-                    <div class="white_button input_operator"><span>+</span></div>
-                    <div class="white_button input_digit"><span>1</span></div>
-                    <div class="white_button input_digit"><span>2</span></div>
-                    <div class="white_button input_digit"><span>3</span></div>
-                    <div class="white_button input_operator"><span>-</span></div>
-                    <div class="white_button input_decimal"><span>.</span></div>
-                    <div class="white_button input_digit"><span>0</span></div>
-                    <div class="white_button input_operator"><span>/</span></div>
-                    <div class="white_button input_operator"><span>x</span></div>
-                    <div class="reset-button"><span>RESET</span></div>
-                    <div class="equalButton"><span>=</span></div>
+                    <div class="white_button input_digit" onclick="appendInput(7)"><span>7</span></div>
+                    <div class="white_button input_digit" onclick="appendInput(8)"><span>8</span></div>
+                    <div class="white_button input_digit" onclick="appendInput(9)"><span>9</span></div>
+                    <div class="del_button" onclick="deleteLastInput()"><span>DEL</span></div>
+                    <div class="white_button input_digit" onclick="appendInput(4)"><span>4</span></div>
+                    <div class="white_button input_digit" onclick="appendInput(5)"><span>5</span></div>
+                    <div class="white_button input_digit" onclick="appendInput(6)"><span>6</span></div>
+                    <div class="white_button input_operator" onclick="appendInput('+')"><span>+</span></div>
+                    <div class="white_button input_digit" onclick="appendInput(1)"><span>1</span></div>
+                    <div class="white_button input_digit" onclick="appendInput(2)"><span>2</span></div>
+                    <div class="white_button input_digit" onclick="appendInput(3)"><span>3</span></div>
+                    <div class="white_button input_operator" onclick="appendInput('-')"><span>-</span></div>
+                    <div class="white_button input_decimal" onclick="appendInput('.')"><span>.</span></div>
+                    <div class="white_button input_digit" onclick="appendInput(0)"><span>0</span></div>
+                    <div class="white_button input_operator" onclick="appendInput('/')"><span>/</span></div>
+                    <div class="white_button input_operator" onclick="appendInput('x')"><span>x</span></div>
+                    <div class="reset-button" onclick="reset()"><span>RESET</span></div>
+                    <div class="equalButton" onclick="calculateResult()"><span>=</span></div>
                 </div>
             </div>
         </div>
+
+        <script>
+            function getPreviousInputs() {
+                return document.getElementsByClassName('output')[0].innerText;
+            }
+
+            function isPreviousInputsEmpty() {
+                let previousInputs = getPreviousInputs();
+                return previousInputs.length == 0;
+            }
+
+            function appendInput(input) {
+                document.getElementsByClassName('output')[0].innerHTML = getPreviousInputs() + input;
+            }
+
+            function deleteLastInput() {
+                if (isPreviousInputsEmpty()) {
+                    return;
+                }
+
+                let previousInputs = getPreviousInputs();
+                document.getElementsByClassName('output')[0].innerHTML = previousInputs.slice(0, previousInputs.length-1);
+            }
+
+            function reset() {
+                document.getElementsByClassName('output')[0].innerHTML = '';
+            }
+
+            function calculateResult() {
+                if (isPreviousInputsEmpty()) {
+                    return;
+                }
+
+                let previousInputs = getPreviousInputs();
+                try {
+                    let result = eval(previousInputs);
+                    document.getElementsByClassName('output')[0].innerHTML = result;
+                } catch (error) {
+                    let errorMsg = 'Wrong expressin : '+error;
+                    console.log(errorMsg);
+                    alert(errorMsg);
+                }
+            }
+        </script>
     </body>
 </html>
