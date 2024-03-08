@@ -21,6 +21,9 @@ body {
 }
 
 .output {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
     height: 20vh;
     background-color: #181F32;
     margin-bottom: 5px;
