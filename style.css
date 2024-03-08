@@ -27,6 +27,7 @@ body {
     height: 20vh;
     background-color: #181F32;
     margin-bottom: 5px;
+    padding: 20px;
     border-radius: 12px;
     color: white;
 }
@@ -115,6 +116,10 @@ body {
     font-family: Segoe UI;
     font-weight: 700;
     font-size: 55px;
+}
+
+.output > .output_items span {
+    padding-right: 10px;
 }
 
 .calc_text {

@@ -9,7 +9,11 @@
         <div class="calculator_container">
             <div class="calculator_area">
                 <div class="calc_text"><span>calc</span></div>
-                <div class="output"></div>
+                <div class="output">
+                    <div class="output_items">
+
+                    </div>
+                </div>
                 <div class="input">
                     <div class="white_button input_digit" onclick="appendInput(7)"><span>7</span></div>
                     <div class="white_button input_digit" onclick="appendInput(8)"><span>8</span></div>
@@ -34,6 +38,8 @@
         </div>
 
         <script>
+            const operators = ['+', '-', '/', 'x'];
+
             function getPreviousInputs() {
                 return document.getElementsByClassName('output')[0].innerText;
             }
@@ -44,20 +50,49 @@
             }
 
             function appendInput(input) {
-                document.getElementsByClassName('output')[0].innerHTML = getPreviousInputs() + input;
+                const inputs = getPreviousInputs() + input;
+                const inputsAfterStyle = applyStyleToInputs(inputs);
+                document.getElementsByClassName('output_items')[0].innerHTML = inputsAfterStyle;
             }
 
+            function applyStyleToInputs(inputs) {
+                let inputsAfterStyle = '';
+                for (const c of inputs) {
+                    if (isOperator(c)) {
+                        inputsAfterStyle = inputsAfterStyle + applyOutputOperatorStyle(c);
+                    } else {
+                        inputsAfterStyle = inputsAfterStyle + applyOutputNumberStyle(c);
+                    }
+                }
+
+                return inputsAfterStyle
+            }
+
+            function isOperator(input) {
+                return operators.includes(input);
+            }
+
+            function applyOutputOperatorStyle(input) {
+                return '<span class="output_operator">' + input + '</span>';
+            }
+
+            function applyOutputNumberStyle(input) {
+                return '<span class="output_number">' + input + '</span>';
+            }
+ 
             function deleteLastInput() {
                 if (isPreviousInputsEmpty()) {
                     return;
                 }
 
-                let previousInputs = getPreviousInputs();
-                document.getElementsByClassName('output')[0].innerHTML = previousInputs.slice(0, previousInputs.length-1);
+                const inputs = getPreviousInputs();
+                const inputsAfterDeletingLastInput = inputs.slice(0, inputs.length-1);
+                const inputsAfterDeletingLastInputAndApplyingStyle = applyStyleToInputs(inputsAfterDeletingLastInput);
+                document.getElementsByClassName('output_items')[0].innerHTML = inputsAfterDeletingLastInputAndApplyingStyle;
             }
 
             function reset() {
-                document.getElementsByClassName('output')[0].innerHTML = '';
+                document.getElementsByClassName('output_items')[0].innerHTML = '';
             }
 
             function calculateResult() {
@@ -67,10 +102,10 @@
 
                 let previousInputs = getPreviousInputs();
                 previousInputs = previousInputs.replace(/x/g, '*');
-                
+
                 try {
                     let result = eval(previousInputs);
-                    document.getElementsByClassName('output')[0].innerHTML = result;
+                    document.getElementsByClassName('output')[0].innerHTML = '<span class="output_number">'+result+'</span>';
                 } catch (error) {
                     let errorMsg = 'Wrong expressin : '+error;
                     console.log(errorMsg);
